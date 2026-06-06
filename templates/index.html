@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Sports Car Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="{{ url_for('static', filename='logo.png') }}"
+         class="logo">
+
+    <h1>Sports Car Price Prediction</h1>
+
+    <img src="{{ url_for('static', filename='car.png') }}"
+         class="car">
+
+    <form action="/predict" method="POST">
+
+        <label>Horsepower</label>
+        <input type="number" name="horsepower" required>
+
+        <label>Torque (lb-ft)</label>
+        <input type="number" name="torque" required>
+
+        <label>Car Make</label>
+
+        <select name="car_make">
+
+            {% for make in car_makes %}
+            <option value="{{ make }}">{{ make }}</option>
+            {% endfor %}
+
+        </select>
+
+        <label>Car Model</label>
+
+        <select name="car_model">
+
+            {% for model in car_models %}
+            <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+            Predict Price
+        </button>
+
+    </form>
+
+   <p class="about">
+This machine learning system predicts the price of a sports car
+using Horsepower, Torque, Car Make and Car Model.
+The result is displayed in both US Dollars and Indian Rupees.
+</p>
+
+{% if usd_price and inr_price %}
+
+<div class="prediction-box">
+
+    <div class="usd-box">
+        <h3>💵 Price in USD</h3>
+        <p>{{ usd_price }}</p>
+    </div>
+
+    <div class="inr-box">
+        <h3>🇮🇳 Price in INR</h3>
+        <p>{{ inr_price }}</p>
+    </div>
+
+</div>
+
+{% endif %}
+</div>
+
+</body>
+
+</html>
